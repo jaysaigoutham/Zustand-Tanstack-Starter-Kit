@@ -2,14 +2,17 @@ import { useEffect } from "react";
 import NoteFilter from "./Components/Notes/NoteFilter";
 import NoteForm from "./Components/Notes/NoteForm";
 import NoteList from "./Components/Notes/NoteList";
-import { useNoteActions, useNotesFilterd } from "./Store/NoteStore";
+import { useNoteActions, useNotes, useNotesFilterd } from "./Store/NoteStore";
+import noteService from "./Services/notes"
 
 const Notes = () => {
-  const { initializeNotes } = useNoteActions();
+
+  const {initialize, initializeNotes} = useNoteActions()
 
   useEffect(() => {
     initializeNotes();
-  }, [initializeNotes]);
+    //noteService.getall().then(notes => initialize(notes))
+  }, [initializeNotes])
 
   return (
     <div>
