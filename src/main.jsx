@@ -9,13 +9,20 @@ import TanstackApp from "./Components/TanstackNotes/TanstackNotes.jsx";
 import { CounterContextProvider } from "./Components/Contexts/CounterContext.jsx";
 import ParentNavigation from "./ParentNavigation.jsx";
 import MainRouter from "./MainRouter.jsx";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle, theme } from "./Styled.js";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
-  <QueryClientProvider client={queryClient}>
-    <CounterContextProvider>
-      <MainRouter /> { /* <ParentNavigation />*/}
-    </CounterContextProvider>
-  </QueryClientProvider>,
+  <StrictMode>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <QueryClientProvider client={queryClient}>
+        <CounterContextProvider>
+          <MainRouter /> { /* <ParentNavigation />*/}
+        </CounterContextProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  </StrictMode>,
 );
