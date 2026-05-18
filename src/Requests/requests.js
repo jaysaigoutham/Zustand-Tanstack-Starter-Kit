@@ -1,5 +1,6 @@
 const baseUrl = "http://localhost:3001/notes";
 
+// Read all notes from the json-server endpoint.
 export const getNotes = async () => {
   const response = await fetch(baseUrl);
   if (!response.ok) {
@@ -8,6 +9,7 @@ export const getNotes = async () => {
   return await response.json();
 };
 
+// Create a note and return the created record from the server.
 export const createNote = async (newNote) => {
   const options = {
     method: "POST",
@@ -24,6 +26,7 @@ export const createNote = async (newNote) => {
   return await response.json();
 };
 
+// Replace an existing note by id and return the updated record.
 export const updateNote = async (updateNote) => {
   const options = {
     method: "PUT",

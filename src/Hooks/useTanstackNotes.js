@@ -1,13 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { getNotes, createNote, updateNote } from "../Requests/requests";
-import {Button, In} from "styled-components";
 
+// Encapsulates note query + mutations behind a small UI-friendly API.
 export const useTanstackNotes = () => {
   const queryClient = useQueryClient();
 
   const newNoteMutation = useMutation({
     mutationFn: createNote,
     onSuccess: (newNote) => {
+      // Fast local cache append after create succeeds.
       const notes = queryClient.getQueryData(["notes"]);
       queryClient.setQueryData(["notes"], notes.concat(newNote));
     },
@@ -16,6 +17,7 @@ export const useTanstackNotes = () => {
   const updateNoteMutation = useMutation({
     mutationFn: updateNote,
     onSuccess: () => {
+      // Refresh authoritative list after update to keep cache consistent.
       queryClient.invalidateQueries({ queryKey: ["notes"] });
     },
   });

@@ -11,7 +11,9 @@ import ParentNavigation from "./ParentNavigation.jsx";
 import MainRouter from "./MainRouter.jsx";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle, theme } from "./Styled.js";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary.jsx";
 
+// Keep a single React Query client instance for the full app lifecycle.
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
@@ -20,7 +22,10 @@ createRoot(document.getElementById("root")).render(
       <GlobalStyle />
       <QueryClientProvider client={queryClient}>
         <CounterContextProvider>
-          <MainRouter /> { /* <ParentNavigation />*/}
+          {/* Global fallback for unhandled render errors in the routed app tree. */}
+          <ErrorBoundary>
+            <MainRouter /> {/* <ParentNavigation />*/}
+          </ErrorBoundary>
         </CounterContextProvider>
       </QueryClientProvider>
     </ThemeProvider>

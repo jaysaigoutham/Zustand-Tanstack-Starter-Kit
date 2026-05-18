@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import CustomHookCounter from "./Components/CustomHookCounter/CustomHookCounter";
 import { FormHook } from "./Components/FormHook/formHook";
+import ErrorBoundary from "./ErrorBoundary/ErrorBoundary.jsx";
 
 const MainRouter = () => {
   const padding = {
@@ -61,12 +62,13 @@ const MainRouter = () => {
 
 
 
+        {/* Route-level boundaries isolate page failures and keep navigation usable. */}
         <Routes>
           <Route path="/" element={<Notes />} />
-          <Route path="/tanstacknotes" element={<TanstackApp />} />
-          <Route path="/zustandcounter" element={<CounterApp />} />
-          <Route path="/customhookcounter" element={<CustomHookCounter />} />
-          <Route path="/customhookform" element={<FormHook />} />
+          <Route path="/tanstacknotes" element={<ErrorBoundary><TanstackApp /></ErrorBoundary>} />
+          <Route path="/zustandcounter" element={<ErrorBoundary><CounterApp /></ErrorBoundary>} />
+          <Route path="/customhookcounter" element={<ErrorBoundary><CustomHookCounter /></ErrorBoundary>} />
+          <Route path="/customhookform" element={<ErrorBoundary><FormHook /></ErrorBoundary>} />
         </Routes>
       </BrowserRouter>
     </Container>
